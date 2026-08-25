@@ -1,31 +1,18 @@
-# TanStack Cloudflare Site Template
+# Worker Web Template
 
-Reusable starter for SEO websites, affiliate pages, landing pages, content hubs, and simple lead capture projects.
+Fast starter for SEO sites, content hubs, affiliate pages, landing pages, and simple lead capture flows on Cloudflare Workers.
 
-## Stack
-
-- React + TypeScript
-- TanStack Start + TanStack Router
-- Vite
-- Tailwind CSS
-- Cloudflare Workers
-- Cloudflare D1 optional lead database
-
-## First Setup
+## Use It In 5 Minutes
 
 ```bash
+git clone https://github.com/maigiadn/worker-web-template.git my-site
+cd my-site
 npm install
 npm run sitemap
 npm run dev
 ```
 
-For a real domain sitemap:
-
-```bash
-SITE_URL=https://your-domain.com npm run sitemap
-```
-
-PowerShell:
+If you are on PowerShell and want a real sitemap URL:
 
 ```powershell
 $env:SITE_URL = "https://your-domain.com"
@@ -33,25 +20,41 @@ npm run sitemap
 Remove-Item Env:SITE_URL
 ```
 
-## Before Launch
+## Replace These First
 
-1. Replace placeholders in `src/content/site.ts`.
-2. Replace `example.com` in `public/robots.txt` and `wrangler.jsonc`.
-3. Create a D1 database and put the real database ID into `wrangler.jsonc`.
-4. Apply `schema.sql` to D1.
-5. Run `npm run build`.
-6. Deploy with `npm run deploy`.
+1. `src/content/site.ts`
+2. `public/robots.txt`
+3. `wrangler.jsonc`
+4. `schema.sql` if you need more lead fields
+
+## What This Template Gives You
+
+- React + TypeScript
+- TanStack Start + TanStack Router
+- Vite + Tailwind
+- Cloudflare Workers SSR
+- Optional Cloudflare D1 lead capture
+- Starter routes for home, about, contact, blog, and checklist
 
 ## Main Files
 
-- `src/routes`: pages
-- `src/components/site`: layout, header, footer, lead form
-- `src/content`: brand, navigation, blog data
-- `src/lib/seo.ts`: SEO helper
-- `src/server.ts`: Cloudflare Worker entry and `/api/leads`
+- `AGENT_CONTEXT.md`: context for agents using this template
+- `src/content`: brand, navigation, and blog data
+- `src/components/site`: header, footer, layout, lead form
+- `src/routes`: starter pages
+- `src/server.ts`: Worker entry and `/api/leads`
 - `schema.sql`: D1 schema
-- `wrangler.jsonc`: Cloudflare deployment config
+- `wrangler.jsonc`: deploy config
 
-## Notes
+## Before Deploy
 
-`src/routeTree.gen.ts` is a placeholder. TanStack Router regenerates it during dev/build after the template is copied into a real project.
+```bash
+npm run build
+```
+
+Then apply the D1 schema if needed and deploy:
+
+```bash
+wrangler d1 execute project-name-db --file=schema.sql --remote
+npm run deploy
+```
